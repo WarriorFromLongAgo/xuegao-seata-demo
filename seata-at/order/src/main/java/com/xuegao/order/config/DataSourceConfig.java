@@ -1,4 +1,4 @@
-package com.xuegao.account.config;
+package com.xuegao.order.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import io.seata.rm.datasource.DataSourceProxy;
@@ -12,13 +12,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.sql.DataSource;
 
 /**
- * <br/> @ClassName：DataSourceConfig
+ * <br/> @PackageName：com.xuegao.business.config
+ * <br/> @ClassName：DataScourceConfig
  * <br/> @Description：
- * <br/> @date：2021/9/3 19:43
+ * <br/> @author：xuegao
+ * <br/> @date：2021/9/4 17:12
  */
 @Configuration
 public class DataSourceConfig {
-
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
@@ -36,4 +37,5 @@ public class DataSourceConfig {
     public JdbcTemplate jdbcTemplate(DataSourceProxy dataSourceProxy) {
         return new JdbcTemplate(dataSourceProxy);
     }
+
 }
