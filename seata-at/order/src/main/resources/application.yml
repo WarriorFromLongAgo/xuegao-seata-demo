@@ -25,4 +25,10 @@ logging:
     io.seata: debug
 
 seata:
-  tx-service-group: xuegao-seata-at
+  tx-service-group: xuegao_seata_at
+  enabled: true
+  registry:
+    eureka:
+      service-url: http://localhost:8761/eureka
+      weight: 1
+#  use-jdk-proxy: true

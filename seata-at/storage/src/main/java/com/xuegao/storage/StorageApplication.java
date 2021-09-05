@@ -6,6 +6,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableEurekaClient
+// @EnableAutoDataSourceProxy
 public class StorageApplication {
 
     public static void main(String[] args) {

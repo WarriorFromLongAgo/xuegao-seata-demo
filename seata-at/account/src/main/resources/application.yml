@@ -17,7 +17,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+      defaultZone: "http://${eureka.instance.hostname}:8761/eureka/"
 
 logging:
   level:
@@ -25,4 +25,65 @@ logging:
     io.seata: debug
 
 seata:
-  tx-service-group: xuegao-seata-at
+  enabled: true
+  data-source-proxy-mode: AT
+  enable-auto-data-source-proxy: true
+  use-jdk-proxy: false
+  application-id: account_seata_at_demo # 默认是 spring.application.name
+  #  tx-service-group: my_test_tx_group
+  tx-service-group: xuegao_seata_at # 事务群组，可以每个应用单独取名字，也可以使用相同的名字
+  #  但是要和 service.vgroup-mapping 下面的 key 相同，value 可以随便写
+  registry:
+    type: eureka
+    eureka:
+      service-url: http://127.0.0.1:8761/eureka
+      weight: 1
+  service:
+    grouplist:
+      default: "127.0.0.1:8091"
+    enable-degrade: false # 降级开关
+    disable-global-transaction: false # 禁用全局事务（默认false）
+    vgroup-mapping:
+      xuegao_seata_at: seata_server # tc集群，必须和 seata-server 保持一致
+  #      my_test_tx_group: default # tc集群，必须和 seata-server 保持一致
+  client:
+    rm:
+      report-success-enable: true
+      table-meta-check-enable: false # 自动刷新缓存中的表结构（默认false）
+      report-retry-count: 5 # 一阶段结果上报TC重试次数（默认5）
+      async-commit-buffer-limit: 10000 # 异步提交缓存队列长度（默认10000）
+      lock:
+        retry-interval: 10 # 校验或占用全局锁重试间隔（默认10ms）
+        retry-times: 30 # 校验或占用全局锁重试次数（默认30）
+        retry-policy-branch-rollback-on-conflict: true # 分支事务与其它全局回滚事务冲突时锁策略（优先释放本地锁让回滚成功）
+    tm:
+      commit-retry-count: 3 # 一阶段全局提交结果上报TC重试次数（默认1次，建议大于1）
+      rollback-retry-count: 3 # 一阶段全局回滚结果上报TC重试次数（默认1次，建议大于1）
+      degrade-check: false
+      degrade-check-period: 2000
+      degrade-check-allow-times: 10
+    undo:
+      data-validation: true # 二阶段回滚镜像校验（默认true开启）
+      log-serialization: jackson # undo序列化方式（默认jackson）
+      log-table: undo_log  # 自定义undo表名（默认undo_log）
+  transport:
+    shutdown:
+      wait: 3
+    thread-factory:
+      boss-thread-prefix: NettyBoss
+      worker-thread-prefix: NettyServerNIOWorker
+      server-executor-thread-prefix: NettyServerBizHandler
+      share-boss-worker: false
+      client-selector-thread-prefix: NettyClientSelector
+      client-selector-thread-size: 1
+      client-worker-thread-prefix: NettyClientWorkerThread
+    type: TCP
+    server: NIO
+    heartbeat: true
+    serialization: seata
+    compressor: none
+    enable-client-batch-send-request: true # 客户端事务消息请求是否批量合并发送（默认true）
+
+  log:
+    exception-rate: 100
+

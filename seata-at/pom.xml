@@ -31,16 +31,19 @@
         <maven.test.skip>false</maven.test.skip>
         <maven.javadoc.skip>true</maven.javadoc.skip>
 
-        <spring-cloud.version>2020.0.3</spring-cloud.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <spring-boot.version>2.3.12.RELEASE</spring-boot.version>
+        <spring-cloud-eureka-client.version>2.2.9.RELEASE</spring-cloud-eureka-client.version>
+
         <spring-boot-seata.version>1.4.2</spring-boot-seata.version>
-        <spring-cloud-openfeign.version>3.0.0</spring-cloud-openfeign.version>
+        <spring-cloud-seata.version>2.2.5.RELEASE</spring-cloud-seata.version>
+        <spring-cloud-openfeign.version>2.2.9.RELEASE</spring-cloud-openfeign.version>
         <spring-cloud-sleuth.version>3.0.0</spring-cloud-sleuth.version>
-        <spring-cloud-eureka-client.version>3.0.0</spring-cloud-eureka-client.version>
-        <spring-boot.version>2.5.0</spring-boot.version>
         <junit.version>4.13.1</junit.version>
         <fastjson.version>1.2.75</fastjson.version>
         <mysql-connector.version>8.0.26</mysql-connector.version>
-        <druid.version>1.2.6</druid.version>
+        <druid-boot.version>1.2.6</druid-boot.version>
+        <druid.version>1.1.21</druid.version>
     </properties>
 
     <dependencyManagement>
@@ -49,7 +52,7 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
+                <version>Hoxton.SR8</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -71,13 +74,31 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+                <version>${spring-cloud-seata.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
                 <version>${spring-boot-seata.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.alibaba</groupId>
+                        <artifactId>druid</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>

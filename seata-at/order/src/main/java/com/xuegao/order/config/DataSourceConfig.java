@@ -2,6 +2,8 @@ package com.xuegao.order.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import io.seata.rm.datasource.DataSourceProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,8 @@ import javax.sql.DataSource;
  */
 @Configuration
 public class DataSourceConfig {
+    private static final Logger log = LoggerFactory.getLogger(DataSourceConfig.class);
+
     @Bean
     @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dataSource() {
@@ -27,7 +31,8 @@ public class DataSourceConfig {
     }
 
     @Primary
-    @Bean("dataSourceProxy")
+    @Bean("dataSource")
+    @ConditionalOnBean(DataSource.class)
     public DataSourceProxy dataSourceProxy(DataSource dataSource) {
         return new DataSourceProxy(dataSource);
     }
@@ -35,6 +40,7 @@ public class DataSourceConfig {
     @Bean("jdbcTemplate")
     @ConditionalOnBean(DataSourceProxy.class)
     public JdbcTemplate jdbcTemplate(DataSourceProxy dataSourceProxy) {
+        log.info("DataSourceProxy = {}", dataSourceProxy);
         return new JdbcTemplate(dataSourceProxy);
     }
 

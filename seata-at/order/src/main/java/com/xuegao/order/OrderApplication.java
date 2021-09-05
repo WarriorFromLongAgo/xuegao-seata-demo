@@ -8,6 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 @EnableEurekaClient
+// @EnableAutoDataSourceProxy
 public class OrderApplication {
 
     public static void main(String[] args) {
