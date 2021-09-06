@@ -39,7 +39,7 @@
         <spring-cloud-seata.version>2.2.5.RELEASE</spring-cloud-seata.version>
         <spring-cloud-openfeign.version>2.2.9.RELEASE</spring-cloud-openfeign.version>
         <spring-cloud-LoadBalancer.version>2.2.9.RELEASE</spring-cloud-LoadBalancer.version>
-        <spring-cloud-sleuth.version>3.0.0</spring-cloud-sleuth.version>
+        <spring-cloud-sleuth.version>2.2.8.RELEASE</spring-cloud-sleuth.version>
         <junit.version>4.13.1</junit.version>
         <fastjson.version>1.2.75</fastjson.version>
         <mysql-connector.version>8.0.26</mysql-connector.version>
