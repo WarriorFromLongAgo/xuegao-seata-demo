@@ -7,6 +7,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 @SpringBootApplication
 @EnableEurekaClient
+// @EnableFeignClients
 @EnableAutoDataSourceProxy
 public class StorageApplication {
 

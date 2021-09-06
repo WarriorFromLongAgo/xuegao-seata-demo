@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author jimin.jm@alibaba-inc.com
  * @date 2019/06/14
  */
-@FeignClient(name = "order-at-service", url = "127.0.0.1:12000")
+@FeignClient(name = "order-at-service")
 public interface OrderFeignClient {
 
     @GetMapping("/create")

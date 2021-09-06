@@ -17,7 +17,15 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: "http://${eureka.instance.hostname}:8761/eureka/"
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+    fetch-registry: true #default true
+
+#feign:
+#  hystrix:
+#    enabled: true
+ribbon:
+  eureka:
+    enabled: true
 
 logging:
   level:

@@ -19,6 +19,19 @@ eureka:
     service-url:
       defaultZone: "http://${eureka.instance.hostname}:8761/eureka/"
 
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 10000
+        readTimeout: 600000
+ribbon:
+  eureka:
+    enabled: true
+
+
 logging:
   level:
     root: info
