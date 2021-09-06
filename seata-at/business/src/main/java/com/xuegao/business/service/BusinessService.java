@@ -3,12 +3,15 @@ package com.xuegao.business.service;
 import com.xuegao.business.feign.OrderFeignClient;
 import com.xuegao.business.feign.StorageFeignClient;
 import io.seata.spring.annotation.GlobalTransactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author jimin.jm@alibaba-inc.com
@@ -16,6 +19,7 @@ import java.util.Map;
  */
 @Service
 public class BusinessService {
+    private static final Logger log = LoggerFactory.getLogger(BusinessService.class);
 
     @Autowired
     private StorageFeignClient storageFeignClient;
@@ -33,12 +37,13 @@ public class BusinessService {
      * @param orderCount
      */
     @GlobalTransactional
-    public void purchase(String userId, String commodityCode, int orderCount) {
+    public void purchase(String userId, String commodityCode, int orderCount) throws InterruptedException {
+        log.info(" 开始执行 ");
         storageFeignClient.deduct(commodityCode, orderCount);
-
         orderFeignClient.create(userId, commodityCode, orderCount);
-
+        log.info(" 结束执行 ");
         if (!validData()) {
+            TimeUnit.SECONDS.sleep(5L);
             throw new RuntimeException("账户或库存不足,执行回滚");
         }
     }
