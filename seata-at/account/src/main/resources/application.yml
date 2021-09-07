@@ -51,7 +51,7 @@ seata:
     enable-degrade: false # 降级开关
     disable-global-transaction: false # 禁用全局事务（默认false）
     vgroup-mapping:
-      xuegao_seata_at: seata_server # tc集群，必须和 seata-server 保持一致
+      xuegao_seata_at: seata_server # tc集群，必须和 seata-server 保持一致，也就是 application = "seata_server"
   #      my_test_tx_group: default # tc集群，必须和 seata-server 保持一致
   client:
     rm:
